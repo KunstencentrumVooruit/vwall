@@ -21,3 +21,8 @@ if [ "$1" = "master" ]; then
 	pkill -f "viewer.py" # xloader zorgt voor auto restart viewer.py	
 	
 fi
+if [ "$1" = "slave" ]; then
+
+	
+
+fi

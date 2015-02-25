@@ -10,7 +10,7 @@ from signal import signal, SIGUSR1, SIGUSR2
 def setup():
 	# Initiate logging
 	logging.basicConfig(level=logging.DEBUG,
-                    filename='/tmp/screenly_gpio.log',
+                    filename='/tmp/vwall_gpio.log',
                     format='%(asctime)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
 	logging.debug("------------------ COLD START ------------------")
