@@ -36,10 +36,10 @@ if [ "$1" = "slave" ]; then
 	#sudo /etc/init.d/supervisor stop > /dev/null
 	#sudo /etc/init.d/supervisor start > /dev/null
 
-	if [ $2 -eq 0 ]; then
+	echo "Auto setting hostname"
 		CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 		NEW_HOSTNAME = "vwallSLA$2"
     	echo $NEW_HOSTNAME > /etc/hostname
     	sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
-    fi
+    
 fi
