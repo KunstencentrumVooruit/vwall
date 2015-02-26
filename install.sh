@@ -26,14 +26,20 @@ fi
 if [ "$1" = "slave" ]; then
 
 	echo "Installing pwlibs & pwomxplayer..."
-	wget http://dl.piwall.co.uk/pwlibs1_1.1_armhf.deb
-	wget http://dl.piwall.co.uk/pwomxplayer_20130815_armhf.deb
-	sudo dpkg -i pwlibs1_1.1_armhf.deb
-	sudo dpkg -i pwomxplayer_20130815_armhf.deb
+	#wget http://dl.piwall.co.uk/pwlibs1_1.1_armhf.deb
+	#wget http://dl.piwall.co.uk/pwomxplayer_20130815_armhf.deb
+	#sudo dpkg -i pwlibs1_1.1_armhf.deb
+	#sudo dpkg -i pwomxplayer_20130815_armhf.deb
 
 	echo "Adding gpio_slave to autostart (via Supervisord)"
-	sudo ln -s ~/vwall/gpio_slave.conf /etc/supervisor/conf.d/gpio_slave.conf
-	sudo /etc/init.d/supervisor stop > /dev/null
-	sudo /etc/init.d/supervisor start > /dev/null
+	#sudo ln -s ~/vwall/gpio_slave.conf /etc/supervisor/conf.d/gpio_slave.conf
+	#sudo /etc/init.d/supervisor stop > /dev/null
+	#sudo /etc/init.d/supervisor start > /dev/null
 
+	if [ $2 -eq 0 ]; then
+		CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+		NEW_HOSTNAME = "vwallSLA$2"
+    	echo $NEW_HOSTNAME > /etc/hostname
+    	sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+    fi
 fi
