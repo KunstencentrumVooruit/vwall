@@ -20,7 +20,14 @@ if [ "$1" = "master" ]; then
 	echo "Replacing viewer.py with custom viewer..."
 	cp viewer_master.py /home/pi/screenly/viewer.py
 	echo "Killing viewer.py"
-	pkill -f "viewer.py" # xloader zorgt voor auto restart viewer.py	
+	pkill -f "viewer.py" # xloader zorgt voor auto restart viewer.py
+
+	echo "Auto setting hostname"
+	CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+	NEW_HOSTNAME="vwallMASTER"
+	echo $NEW_HOSTNAME
+	sudo sh -c "echo $NEW_HOSTNAME > /etc/hostname"
+	sudo sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
 	
 fi
 if [ "$1" = "slave" ]; then
@@ -44,5 +51,20 @@ if [ "$1" = "slave" ]; then
 	sudo sh -c "echo $NEW_HOSTNAME > /etc/hostname"
 	sudo sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
 
-    
 fi
+
+echo "Auto setting network"
+        sudo sh -c "echo auto lo > /etc/network/interfaces"
+        sudo sh -c "echo iface lo inet loopback >> /etc/network/interfaces"
+        sudo sh -c "echo iface eth0 inet static >> /etc/network/interfaces"
+        sudo sh -c "echo address 192.168.0.$2 >> /etc/network/interfaces"
+        sudo sh -c "echo netmask 255.255.255.0 >> /etc/network/interfaces"
+        sudo sh -c "echo up route add -net 224.0.0.0 netmask 240.0.0.0 eth0 >> /etc/network/interfaces"
+        sudo sh -c "echo >> /etc/network/interfaces"    
+        sudo sh -c "echo allow-hotplug wlan0 >> /etc/network/interfaces"
+        sudo sh -c "echo auto wlan0 >> /etc/network/interfaces"
+        sudo sh -c "echo iface wlan0 inet dhcp >> /etc/network/interfaces"
+        sudo sh -c "echo wpa-ssid "ifoon" >> /etc/network/interfaces"
+        sudo sh -c "echo wpa-psk "xxxxxxxxxx" >> /etc/network/interfaces"
+        sudo sh -c "echo >> /etc/network/interfaces"
+        sudo sh -c "echo iface default inet dhcp >> /etc/network/interfaces"
