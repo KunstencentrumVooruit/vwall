@@ -50,7 +50,7 @@ def main():
         GPIO.wait_for_edge(4, GPIO.FALLING)
         stopListening()
         logging.info ("High->low detected!")
-	GPIO.cleanup()
+	
 
 
 if __name__ == "__main__":
