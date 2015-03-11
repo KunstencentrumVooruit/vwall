@@ -27,13 +27,15 @@ def setup_gpio():
 def startListening():
 	call(['pkill', '-STOP', '-f', 'viewer.py']) # send STOP signal to viewer.py / -f option om ook in volledige processstring te kijken, ipv alleen python (/home/pi/screenly/viewer.py) 
 	call(['pkill', '-STOP', 'uzbl-core'])
+	call(['pkill', '-STOP', 'omxplayer'])
 	global p
 	p  = Popen(['su', '-', 'pi', '-c pwomxplayer --config=4bez udp://239.0.1.23:1234?buffer_size=1200000B']) # something long running
 	logging.info ("............ running pwomxplayer ............ ")
 	
 def stopListening():
 	call(['pkill', '-CONT', '-f', 'viewer.py'])
-	call(['pkill', '-CONT', 'uzbl-core']) 
+	call(['pkill', '-CONT', 'uzbl-core'])
+	call(['pkill', '-CONT', 'omxplayer']) 
 	global p
 	logging.info ("terminating pwomx")
 	p.terminate()
