@@ -4,6 +4,8 @@ import atexit
 
 from subprocess import Popen
 from subprocess import call
+from subprocess import check_output
+import subprocess
 import RPi.GPIO as GPIO
 
 def setup():
@@ -25,9 +27,11 @@ def setup_gpio():
 	GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # pud_down niet vergeten, anders random low/high
 
 def startListening():
-	call(['pkill', '-STOP', '-f', 'viewer.py']) # send STOP signal to viewer.py / -f option om ook in volledige processstring te kijken, ipv alleen python (/home/pi/screenly/viewer.py) 
+	
+	call(['pkill', '-STOP', '-f', 'viewer.py']) # send STOP signal to viewer.py / -f option om ook in volledige processstring te kijken, ipv alleen python (/home/pi/screenly/viewer.py)
 	call(['pkill', '-STOP', 'uzbl-core'])
-	call(['pkill', '-STOP', 'omxplayer'])
+	call(['pkill', '-f', 'omxplayer']) # -CONT werkt ook, maar gaf delay bij opstarten pwomx => killen
+	
 	global p
 	p  = Popen(['su', '-', 'pi', '-c pwomxplayer --config=4bez udp://239.0.1.23:1234?buffer_size=1200000B']) # something long running
 	logging.info ("............ running pwomxplayer ............ ")
@@ -35,7 +39,7 @@ def startListening():
 def stopListening():
 	call(['pkill', '-CONT', '-f', 'viewer.py'])
 	call(['pkill', '-CONT', 'uzbl-core'])
-	call(['pkill', '-CONT', 'omxplayer']) 
+	#call(['pkill', '-CONT', 'omxplayer']) # niet meer nodig
 	global p
 	logging.info ("terminating pwomx")
 	p.terminate()
