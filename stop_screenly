@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo /etc/init.d/supervisor stop
+pkill -f "xloader.sh"
+pkill -f "viewer.py"
+
