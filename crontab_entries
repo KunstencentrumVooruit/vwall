@@ -1,0 +1,4 @@
+*/5 * * * *	root	/home/pi/vwall/check_network.sh
+00 1 * * *	pi	/home/pi/vwall/stop_screenly
+45 9 * * *	pi 	sudo reboot
+

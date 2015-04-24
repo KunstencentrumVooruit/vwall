@@ -68,3 +68,6 @@ echo "Auto setting network"
         sudo sh -c "echo wpa-psk "xxxxxxxxxx" >> /etc/network/interfaces"
         sudo sh -c "echo >> /etc/network/interfaces"
         sudo sh -c "echo iface default inet dhcp >> /etc/network/interfaces"
+
+echo "Adding crontab entries...."
+	add_to_crontab

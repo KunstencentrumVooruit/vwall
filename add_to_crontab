@@ -1,0 +1,4 @@
+#!/bin/bash
+ENTRIES="$(cat crontab_entries)"
+echo "${ENTRIES}"
+sudo sh -c "echo \"${ENTRIES}\" >> /etc/crontab" -
