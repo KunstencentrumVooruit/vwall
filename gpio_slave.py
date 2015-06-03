@@ -50,12 +50,13 @@ def main():
     setup_gpio()
     logging.debug('Entering infinite loop.')
     while True:
-        GPIO.wait_for_edge(4, GPIO.RISING)
-        startListening()
-        logging.info ("Low->high detected")
-        GPIO.wait_for_edge(4, GPIO.FALLING)
-        stopListening()
-        logging.info ("High->low detected!")
+        #GPIO.wait_for_edge(4, GPIO.RISING)
+        #startListening()
+        #logging.info ("Low->high detected")
+        #GPIO.wait_for_edge(4, GPIO.FALLING)
+        #stopListening()
+        #logging.info ("High->low detected!")
+	sleep(10)
 	
 
 
